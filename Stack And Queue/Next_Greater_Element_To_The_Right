@@ -1,0 +1,91 @@
+import java.io.*;
+import java.util.*;
+
+public class Main{
+  public static void display(int[] a){
+    StringBuilder sb = new StringBuilder();
+
+    for(int val: a){
+      sb.append(val + "\n");
+    }
+    System.out.println(sb);
+  }
+
+public static void main(String[] args) throws Exception {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+    int n = Integer.parseInt(br.readLine());
+    int[] a = new int[n];
+    for(int i = 0; i < n; i++){
+       a[i] = Integer.parseInt(br.readLine());
+    }
+
+    int[] nge = solve(a);
+    display(nge);
+ }
+
+ public static int[] solve(int[] arr){
+   // solve
+   /*
+   int sol[]=new int[arr.length];
+   Stack <Integer> st=new Stack<>();
+   for(int x=arr.length-1;x>=0;x--)
+   {
+     int n=arr[x];
+     while(st.size()!=0)
+     {
+       if(st.peek()>n)
+       {
+         sol[x]=st.peek();
+         st.push(n);
+         break;
+       }
+       else
+       {
+         st.pop();
+       }
+     }
+     if(st.size()==0)
+     {
+       sol[x]=-1;
+       st.push(n);
+     }
+   }
+   
+   return sol;
+   */
+   Stack<Integer> st=new Stack<>();
+  int nge[]=new int[arr.length];
+  nge[arr.length-1]=-1;
+  st.push(arr[arr.length-1]);
+  for(int x=arr.length-2;x>=0;x--)
+  {
+    while(st.size()!=0 && st.peek()<arr[x])
+    {
+      st.pop();
+    }
+    if(st.size()==0)
+    {
+      nge[x]=-1;
+      st.push(arr[x]);
+    }
+    else
+    {
+      nge[x]=st.peek();
+      st.push(arr[x]);
+    }
+  }
+  return nge;
+ }
+
+}
+
+
+
+
+
+
+
+
+
+
