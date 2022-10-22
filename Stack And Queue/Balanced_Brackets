@@ -1,0 +1,50 @@
+import java.io.*;
+import java.util.*;
+public class Main
+{
+    public static void main(String args[])
+    {
+        Scanner sc=new Scanner(System.in);
+        String str=sc.nextLine();
+        Stack <Character> st=new Stack<>();
+        for(int x=0;x<str.length();x++)
+        {
+            char ch=str.charAt(x);
+            if(ch==')' || ch=='}' || ch==']')
+            {
+                System.out.println(st);
+                while(true)
+                {
+                    System.out.println(st);
+                    if(st.peek()!='(' || st.peek()!='{' || st.peek()!='[')
+                    {
+                        st.pop();   
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                if((ch==')' && st.peek()=='(') || (ch=='}'&& st.peek()=='{') || (ch==']'&& st.peek()=='['))
+                {
+                    st.pop();
+                }
+                else
+                {
+                    System.out.println(false);
+                    return;
+                }
+            }
+            else
+            {
+                st.push(ch);
+            }
+        }
+        if(st.size()!=0)
+        {
+            System.out.println(false);
+            return;
+        }
+        System.out.println(true);
+    }
+}
