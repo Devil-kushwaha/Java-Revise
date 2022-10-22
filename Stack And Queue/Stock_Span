@@ -1,0 +1,103 @@
+import java.io.*;
+import java.util.*;
+
+public class Main{
+  public static void display(int[] a){
+    StringBuilder sb = new StringBuilder();
+
+    for(int val: a){
+      sb.append(val + "\n");
+    }
+    System.out.println(sb);
+  }
+
+public static void main(String[] args) throws Exception {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+    int n = Integer.parseInt(br.readLine());
+    int[] arr= new int[n];
+    for(int i = 0; i < n; i++){
+       arr[i] = Integer.parseInt(br.readLine());
+    }
+
+    int[] span = solve(arr);
+    display(span);
+ }
+
+ public static int[] solve(int[] arr){
+   // solve
+  Stack<Integer> st=new Stack<>();
+  int ngel[]=new int[arr.length];
+  st.push(0);
+  ngel[0]=-1;
+  int sol[]=new int[arr.length];
+  for(int x=1;x<arr.length;x++)
+  {
+    while(st.size()!=0 && arr[st.peek()]<arr[x] )
+    {
+      st.pop();
+    }
+    if(st.size()==0)
+    {
+      ngel[x]=-1;
+      st.push(x);
+    }
+    else
+    {
+      ngel[x]=st.peek();
+      st.push(x);
+    }
+  }
+
+  //Calculating span
+  for(int x=0;x<arr.length;x++)
+  {
+    sol[x]=x-ngel[x];
+  }
+  return sol;
+
+
+
+
+
+
+
+
+
+
+
+
+   /*
+    Stack<Integer> st=new Stack<>();
+    int ans[]=new int[arr.length];
+    for(int x=0;x<arr.length;x++)
+    {
+      while(st.size()!=0 && arr[x]>arr[st.peek()])
+      {
+        st.pop();
+      }
+      if(st.size()==0)
+      {
+        st.push(x);
+        ans[x]=x+1;
+      }
+      else
+      {
+        ans[x]=x-st.peek();
+        st.push(x);
+      }
+    }
+    return ans;
+    */
+ }
+
+}
+
+
+
+
+
+
+
+
+
