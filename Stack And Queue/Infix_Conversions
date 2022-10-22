@@ -1,0 +1,85 @@
+import java.io.*;
+import java.util.*;
+
+public class Main{
+  
+
+public static void main(String[] args) throws Exception {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    String exp = br.readLine();
+
+    // code
+    Stack<String> inf=new Stack<>();
+    Stack<String> pos=new Stack<>();
+    Stack<Character> opt=new Stack<>();
+    
+    for(int x=0;x<exp.length();x++)
+    {
+        char ch=exp.charAt(x);
+        if(ch=='(')
+        {
+            opt.push(ch);
+        }
+        else if(ch==')')
+        {
+            while(opt.size()!=0 && opt.peek()!='(')
+            {
+                String v2=inf.pop();
+                String v1=inf.pop();
+                String v4=pos.pop();
+                String v3=pos.pop();
+                char optor=opt.pop();
+                inf.push(optor+v1+v2);
+                pos.push(v3+v4+optor);
+            }
+            opt.pop();
+        }
+        else if(ch=='+'||ch=='-'||ch=='*'||ch=='/')
+        {
+            while(opt.size()!=0 && opt.peek()!='(' && precedence(opt.peek())>=precedence(ch) )
+            {
+                String v2=inf.pop();
+                String v1=inf.pop();
+        String v4=pos.pop();
+        String v3=pos.pop();
+                char optor=opt.pop();
+                inf.push(optor+v1+v2);
+                pos.push(v3+v4+optor);
+            }
+            opt.push(ch);
+        }
+        else
+        {
+            inf.push(ch+"");
+            pos.push(ch+"");
+        }
+        //System.out.println(inf+"inf");
+        //System.out.println(opt+"opt");
+    }
+    while(opt.size()!=0)
+    {
+        String v2=inf.pop();
+        String v1=inf.pop();
+        String v4=pos.pop();
+        String v3=pos.pop();
+        char optor=opt.pop();
+        inf.push(optor+v1+v2);
+        pos.push(v3+v4+optor);
+        
+      //  System.out.println(inf+"inf");
+    }
+    System.out.println(pos.peek());
+    System.out.println(inf.peek());
+ }
+ public static int precedence(char optor)
+ {
+     if(optor=='+'||optor=='-')
+     {
+         return 1;
+     }
+     else
+     {
+         return 2;
+     } 
+ }
+}
