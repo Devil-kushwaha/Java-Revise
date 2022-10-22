@@ -1,0 +1,92 @@
+import java.io.*;
+import java.util.*;
+
+public class Main{
+  
+
+public static void main(String[] args) throws Exception {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    String exp = br.readLine();
+
+    // code
+
+    //Evaluation
+    Stack<Integer> ev=new Stack<>();
+    for(int x=exp.length()-1;x>=0;x--)
+    {
+        char ch=exp.charAt(x);
+        if(ch=='+'||ch=='-'||ch=='*'||ch=='/')
+        {
+            int v1=ev.pop();
+            int v2=ev.pop();
+            ev.push(operation(v1,v2,ch));
+        }
+        else
+        {
+            ev.push(ch-'0');
+        }
+    }
+    System.out.println(ev.peek());
+
+
+
+    //To infix
+    Stack<String> inf=new Stack<>();
+    for(int x=exp.length()-1;x>=0;x--)
+    {
+        char ch=exp.charAt(x);
+        if(ch=='+'||ch=='-'||ch=='*'||ch=='/')
+        {
+            String v1=inf.pop();
+            String v2=inf.pop();
+            inf.push("("+v1+ch+v2+")");
+        }
+        else
+        {
+            inf.push(ch+"");
+        }
+    }
+    System.out.println(inf.peek());
+
+
+    //To Postfix
+    Stack<String> pos=new Stack<>();
+    for(int x=exp.length()-1;x>=0;x--)
+    {
+        char ch=exp.charAt(x);
+        if(ch=='+'||ch=='-'||ch=='*'||ch=='/')
+        {
+            String v1=pos.pop();
+            String v2=pos.pop();
+            pos.push(v1+v2+ch);
+        }
+        else
+        {
+            pos.push(ch+"");
+        }
+    }
+    System.out.println(pos.peek());
+ }
+
+ public static int operation(int v1,int v2,char ch)
+ {
+     if(ch=='+')
+     {
+         return v1+v2;
+     }
+     
+     if(ch=='-')
+     {
+         return v1-v2;
+     }
+     
+     else if(ch=='*')
+     {
+         return v1*v2;
+     }
+     else
+     {
+         return v1/v2;
+     }
+ }
+}
