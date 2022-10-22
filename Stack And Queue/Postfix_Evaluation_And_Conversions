@@ -1,0 +1,101 @@
+import java.io.*;
+import java.util.*;
+
+public class Main{
+  
+
+public static void main(String[] args) throws Exception {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    String exp = br.readLine();
+    value(exp);
+    infix(exp);
+    prefix(exp);
+    // code
+ }
+
+
+//Calculating value of a Number
+ public static void value(String exp)
+ {
+     Stack<Integer> ev=new Stack<>();
+     for(int x=0;x<exp.length();x++)
+     {
+         char ch=exp.charAt(x);
+         if(ch=='+'||ch=='-'||ch=='*'||ch=='/')
+         {
+             int v2=ev.pop();
+             int v1=ev.pop();
+             ev.push(operation(v1,v2,ch));
+         }
+         else
+         {
+             ev.push(ch-'0');
+         }
+     }
+     System.out.println(ev.peek());
+ }
+
+//Doing basic operation for calculating value of a number
+ public static int operation(int v1,int v2,char ch)
+ {
+     if(ch=='+')
+     {
+         return v1+v2;
+     }
+     else if(ch=='-')
+     {
+         return v1-v2;
+     }
+     else if(ch=='*')
+     {
+         return v1*v2;
+     }
+     else
+     {
+         return v1/v2;
+     }
+ }
+
+ //Converting To Infix
+ public static void infix(String exp)
+ {
+     Stack<String> inf=new Stack<>();
+     for(int x=0;x<exp.length();x++)
+     {
+         char ch=exp.charAt(x);
+         if(ch=='+'||ch=='-'||ch=='*'||ch=='/')
+         {
+             String v2=inf.pop();
+             String v1=inf.pop();
+             inf.push("("+v1+ch+v2+")");
+         }
+         else
+         {
+             inf.push(ch+"");
+         }
+     }
+     System.out.println(inf.peek());
+ }
+
+ //Postfix To Prefix
+ public static void prefix(String str)
+ {
+     Stack<String> pre=new Stack<>();
+     for(int x=0;x<str.length();x++)
+     {
+         char ch=str.charAt(x);
+         
+         if(ch=='+'||ch=='-'||ch=='*'||ch=='/')
+         {
+             String v2=pre.pop();
+             String v1=pre.pop();
+             pre.push(ch+v1+v2);
+         }
+         else
+         {
+             pre.push(ch+"");
+         }
+     }
+     System.out.println(pre.peek());
+ }
+}
